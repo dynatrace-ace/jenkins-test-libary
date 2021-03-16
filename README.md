@@ -11,6 +11,7 @@ Library versions are listed below:
 | Library Version | Comment |
 | --------------- | ------- |
 | v1.0 | Initial Release |
+| v1.1 | Support for new runner and dynamic jmeter path |
 
 
 *It is recommended to specify the library version in the Jenkinsfile to ensure pipeline stability. For example `@Library('jenkinstest@v1.0')`*
@@ -18,8 +19,7 @@ Library versions are listed below:
 ## Library functions:
 
 **1. Execute Jmeter Test**
-  * Supporting function that allows to run jmeter tests from Jenkins. This function assumes we run on a Jenkins Agent that has JMeter installed 
-  * See [Jmeter README](JMETER.md) for usage details
+  * Supporting function that allows to run jmeter tests from Jenkins. This function assumes we run on a Jenkins Agent that has JMeter installed in `/opt/jmeter`
 
 Once you have everything configured use it in your Jenkins Pipeline like this
 
@@ -49,7 +49,8 @@ pipeline {
                 loopCount: env.LOOPCOUNT.toInteger(),
                 LTN: "perfCheck_${env.APP_NAME}_${BUILD_NUMBER}",
                 funcValidation: false,
-                avgRtValidation: 4000
+                avgRtValidation: 4000,
+                jmeterBaseDir: "/opt/jmeter" // This is the default, it can be overwritten by changing this variable
             )
             if (status != 0) {
                 currentBuild.result = 'FAILED'
@@ -74,6 +75,9 @@ You may have your own, but if not one option is to run Jenkins as [Docker contai
 ```
 docker run -p 8080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home jenkins/jenkins:lts
 ```
+
+**#2- Jmeter available in /opt/jmeter/bin**
+The library assumes it is being run on a runner that has jmeter.sh installed in `/opt/jmeter/bin`
 
 ## Install and configure the Dynatrace Jenkins Library
 
