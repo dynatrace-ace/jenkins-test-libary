@@ -4,7 +4,7 @@ Jenkins shared library for test executions
 
 ## Usage
 
-The directive `@Library('jenkinstest@master')` is added to the top of a Jenkinsfile script to load the latest version of the Jenkins Test Library. Then within the various pipeline stages, Test library functions are called with the required and optional parameters.
+The directive `@Library('jenkinstest@main')` is added to the top of a Jenkinsfile script to load the latest version of the Jenkins Test Library. Then within the various pipeline stages, Test library functions are called with the required and optional parameters.
 
 Library versions are listed below:  
 
