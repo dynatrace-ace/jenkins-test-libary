@@ -11,6 +11,7 @@ Library versions are listed below:
 | Library Version | Comment |
 | --------------- | ------- |
 | v1.0 | Initial Release |
+| v1.1 | Support for new runner and dynamic jmeter path |
 
 
 *It is recommended to specify the library version in the Jenkinsfile to ensure pipeline stability. For example `@Library('jenkinstest@v1.0')`*
