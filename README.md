@@ -12,14 +12,18 @@ Library versions are listed below:
 | --------------- | ------- |
 | v1.0 | Initial Release |
 | v1.1 | Support for new runner and dynamic jmeter path |
+| v1.2 | Added Helpers.waitForDeployment |
 
 
 *It is recommended to specify the library version in the Jenkinsfile to ensure pipeline stability. For example `@Library('jenkinstest@v1.0')`*
 
 ## Library functions:
 
-**1. Execute Jmeter Test**
+### Execute Jmeter Test
   * Supporting function that allows to run jmeter tests from Jenkins. This function assumes we run on a Jenkins Agent that has JMeter installed in `/opt/jmeter`
+
+### Helpers - wait for deployment to be ready
+  * Supporting function that waits for a deployment in a namespace to be ready. This function assumes we run on a Jenkins Agent that has `kubectl` available
 
 Once you have everything configured use it in your Jenkins Pipeline like this
 
@@ -30,11 +34,30 @@ Once you have everything configured use it in your Jenkins Pipeline like this
 
 // Initialize the class with the event methods
 def jmeter = new com.dynatrace.ace.Jmeter()
+def helpers = new com.dynatrace.ace.Helpers()
 
 // this is called with a script step
 pipeline {
-  agent jmeter
+  agent myagent
   stages {
+    stage('Run health check in dev') {
+      steps {
+        container('kubectl') {
+          script {
+            def status = helpers.waitForDeployment (
+              deploymentName: "myapp",
+              environment: 'dev'
+            )
+            if(status !=0 ){
+              currentBuild.result = 'FAILED'
+              error "Deployment did not finish before timeout."
+            }
+          }
+        }
+      }
+    }
+    
+    
     stage('Run performance test') {
       steps {
         container('jmeter') {
