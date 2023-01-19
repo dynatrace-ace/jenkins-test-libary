@@ -13,6 +13,7 @@ def executeJmeterTest( Map args )
         String checkPath='/health', 
         int vuCount=1, 
         int loopCount=1, 
+        int testDuration=120,
         int thinkTime=250, 
         String LTN='DTLoadTest', 
         boolean funcValidation=false, 
