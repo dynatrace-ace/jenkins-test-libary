@@ -28,6 +28,7 @@ def executeJmeterTest( Map args )
     String checkPath = args.containsKey("checkPath") ? args.checkPath : "/health"
     int vuCount = args.containsKey("vuCount") ? args.vuCount : 1
     int loopCount = args.containsKey("loopCount") ? args.loopCount : 1
+    int testDuration = args.containsKey("testDuration") ? args.testDuration : 120
     int thinkTime = args.containsKey("thinkTime") ? args.thinkTime : 250
     String LTN = args.containsKey("LTN") ? args.LTN : "DTLoadTest"
     boolean funcValidation = args.containsKey("funcValidation") ? args.funcValidation : false
@@ -56,7 +57,7 @@ def executeJmeterTest( Map args )
 
     // lets run the test and put the console output to output.txt
     echo "Execute the jMeter test and console output goes to output.txt."
-    sh "${jmeterBaseDir}/bin/jmeter.sh -n -t ./${scriptName} -e -o ${resultsDir} -l ${resultsDir}_result.tlf -JSERVER_URL='${serverUrl}' -JDT_LTN='${LTN}' -JVUCount='${vuCount}' -JLoopCount='${loopCount}' -JCHECK_PATH='${checkPath}' -JSERVER_PORT='${serverPort}' -JThinkTime='${thinkTime}' > output.txt"                    
+    sh "${jmeterBaseDir}/bin/jmeter.sh -n -t ./${scriptName} -e -o ${resultsDir} -l ${resultsDir}_result.tlf -JSERVER_URL='${serverUrl}' -JDT_LTN='${LTN}' -JVUCount='${vuCount}' -JLoopCount='${loopCount}' -JTestDuration='${testDuration}' -JCHECK_PATH='${checkPath}' -JSERVER_PORT='${serverPort}' -JThinkTime='${thinkTime}' > output.txt"                    
     sh "cat output.txt"
 
     // archive the artifacts
