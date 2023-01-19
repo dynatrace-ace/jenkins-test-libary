@@ -13,7 +13,7 @@ Library versions are listed below:
 | v1.0 | Initial Release |
 | v1.1 | Support for new runner and dynamic jmeter path |
 | v1.2.1 | Support for new jmeter runner and dynamic jmeter install path |
-| v1.3 | Support for jmeter scheduler capability by setting the test duration |
+| v1.3.0 | Support for jmeter scheduler capability by setting the test duration |
 
 
 *It is recommended to specify the library version in the Jenkinsfile to ensure pipeline stability. For example `@Library('jenkinstest@v1.0')`*
